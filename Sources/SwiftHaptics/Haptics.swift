@@ -48,9 +48,9 @@ public class Haptics {
         static let minimumPlayInterval: TimeInterval = 0.2
     }
     
-    private var engine: CHHapticEngine?
-    private var hasStarted: Bool = false
-    private var lastPlayedDate: Date? = nil
+    private static var engine: CHHapticEngine?
+    private static var hasStarted: Bool = false
+    private static var lastPlayedDate: Date? = nil
 
     private static var haveNotPlayedRecently: Bool {
         guard let lastPlayedDate = lastPlayedDate else { return true }
