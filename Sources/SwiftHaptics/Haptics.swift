@@ -35,17 +35,17 @@ public class Haptics {
         }
     }
     
-    public func errorFeedback() {
+    public static func errorFeedback() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.error)
     }
     
-    public func successFeedback() {
+    public static func successFeedback() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }
     
-    public func warningFeedback() {
+    public static func warningFeedback() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
     }
