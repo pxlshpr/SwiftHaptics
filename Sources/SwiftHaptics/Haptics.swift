@@ -1,17 +1,9 @@
-//
-//  Haptics.swift
-//  Breaks
-//
-//  Created by Ahmed Khalaf on 25/7/21.
-//
-
 #if canImport(UIKit)
 import UIKit
 import CoreHaptics
 
 @available(iOS 13.0, *)
 
-//TODO: move this to Common framework
 public class Haptics {
 
     public static func feedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
@@ -41,6 +33,21 @@ public class Haptics {
         } catch {
             print("Error playing haptic: \(error)")
         }
+    }
+    
+    public func errorFeedback() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
+    }
+    
+    public func successFeedback() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
+    
+    public func warningFeedback() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
     }
     
     //MARK: - Private
