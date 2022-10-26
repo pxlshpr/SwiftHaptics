@@ -16,25 +16,6 @@ public class Haptics {
         generator.selectionChanged()
     }
     
-    public static func transientHaptic() {
-        guard haveNotPlayedRecently else { return }
-
-        startIfNeeded()
-        let events = CHHapticEvent(eventType: .hapticTransient, parameters: [
-            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5),
-            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
-        ], relativeTime: 0)
-        
-        do {
-            let pattern = try CHHapticPattern(events: [events], parameters: [])
-            let player = try engine?.makePlayer(with: pattern)
-            try player?.start(atTime: CHHapticTimeImmediate)
-            lastPlayedDate = Date()
-        } catch {
-            print("Error playing haptic: \(error)")
-        }
-    }
-    
     public static func errorFeedback() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.error)
@@ -65,38 +46,56 @@ public class Haptics {
         return timeInterval >= Self.Constants.minimumPlayInterval
     }
     
-    private static func startIfNeeded() {
-        if !hasStarted {
-            startEngine()
-            addObservers()
-        }
-    }
+    //MARK: - Removed due to it affecting keyboard click sounds (making them loud and crackly)
+//    private static func startIfNeeded() {
+//        if !hasStarted {
+//            startEngine()
+//            addObservers()
+//        }
+//    }
     
-    private static func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground),
-                                               name: UIScene.willEnterForegroundNotification, object: nil)
-    }
-     
-    @objc private static func appMovedToForeground(notification: Notification) {
-        ///restart engine whenever we move back to foreground
-        startEngine()
-    }
-    
-    private static func startEngine() {
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
-//            print("Haptics not supported")
-            return
-        }
-        
-        do {
-            engine = try CHHapticEngine()
-            try engine?.start()
-            hasStarted = true
-        } catch {
-            print("There was an error creating the engine: \(error.localizedDescription)")
-        }
-    }
-    
+//    private static func addObservers() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground),
+//                                               name: UIScene.willEnterForegroundNotification, object: nil)
+//    }
+//
+//    @objc private static func appMovedToForeground(notification: Notification) {
+//        ///restart engine whenever we move back to foreground
+//        startEngine()
+//    }
+//
+//    private static func startEngine() {
+//        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
+////            print("Haptics not supported")
+//            return
+//        }
+//
+//        do {
+//            engine = try CHHapticEngine()
+//            try engine?.start()
+//            hasStarted = true
+//        } catch {
+//            print("There was an error creating the engine: \(error.localizedDescription)")
+//        }
+//    }
+//    public static func transientHaptic() {
+//        guard haveNotPlayedRecently else { return }
+//
+//        startIfNeeded()
+//        let events = CHHapticEvent(eventType: .hapticTransient, parameters: [
+//            CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5),
+//            CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+//        ], relativeTime: 0)
+//
+//        do {
+//            let pattern = try CHHapticPattern(events: [events], parameters: [])
+//            let player = try engine?.makePlayer(with: pattern)
+//            try player?.start(atTime: CHHapticTimeImmediate)
+//            lastPlayedDate = Date()
+//        } catch {
+//            print("Error playing haptic: \(error)")
+//        }
+//    }
 }
 
 #endif
